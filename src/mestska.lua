@@ -18,26 +18,26 @@ local c1_food_nearby_caches_found = 0
 local c1_events_placed = 0
 
 for _, f in ipairs(finds) do
-    if testAttribute(f, 26) then
+    if hasAttribute(f, 26) then
         c1_public_transit_caches_found = c1_public_transit_caches_found + 1
     end
 
-    if testAttribute(f, 41) then
+    if hasAttribute(f, 41) then
         c1_stroller_accessible_caches_found = c1_stroller_accessible_caches_found + 1
     end
 
-    if testAttribute(f, 32) then
+    if hasAttribute(f, 32) then
         c1_bicycles_caches_found = c1_bicycles_caches_found + 1
     end
 
-    if testAttribute(f, 59) then
+    if hasAttribute(f, 59) then
         c1_food_nearby_caches_found = c1_food_nearby_caches_found + 1
     end
 end
 
 for _, h in ipairs(hides) do
-    if (f.type == "Event Cache" or f.type == "Cache In Trash Out Event" or f.type == "Lost and Found Event Cache"
-        or f.type == "Mega-Event Cache" or f.type == "Giga-Event Cache" or f.type == "Groundspeak Block Party") then
+    if (h.type == "Event Cache" or h.type == "Cache In Trash Out Event" or h.type == "Lost and Found Event Cache"
+        or h.type == "Mega-Event Cache" or h.type == "Giga-Event Cache" or h.type == "Groundspeak Block Party") then
         c1_events_placed = c1_events_placed + 1
     end
 end

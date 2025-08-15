@@ -18,11 +18,11 @@ local c2_whereigo_letterbox_caches_found = 0
 local c2_mystery_hides = 0
 
 for _, f in ipairs(finds) do
-    if ((not testAttribute(f, 71)) and f.type == "Unknown Cache") then
+    if ((not hasAttribute(f, 71)) and f.type == "Unknown Cache") then
         c2_mystery_caches_found = c2_mystery_caches_found + 1
     end
 
-    if testAttribute(f, 71) then
+    if hasAttribute(f, 71) then
         c2_challenge_caches_found = c2_challenge_caches_found + 1
     end
 
@@ -36,7 +36,7 @@ for _, f in ipairs(finds) do
 end
 
 for _, h in ipairs(hides) do
-    if (f.type == "Unknown Cache") then
+    if (h.type == "Unknown Cache") then
         c2_mystery_hides = c2_mystery_hides + 1
     end
 end

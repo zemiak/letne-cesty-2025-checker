@@ -15,29 +15,29 @@ local c3_earth_caches_found = 0
 local c3_tourist_caches_found = 0
 local c3_scenic_caches_found = 0
 local c3_hike_caches_found = 0
-local c3_physical_cache_created = false
+local c3_physical_cache_created = 0
 
 for _, f in ipairs(finds) do
-    if f.type = "Earthcache" then
+    if f.type == "Earthcache" then
         c3_earth_caches_found = c3_earth_caches_found + 1
     end
 
-    if testAttribute(f, 63) then
+    if hasAttribute(f, 63) then
         c3_tourist_caches_found = c3_tourist_caches_found + 1
     end
 
-    if testAttribute(f, 8) then
+    if hasAttribute(f, 8) then
         c3_scenic_caches_found = c3_scenic_caches_found + 1
     end
 
-    if testAttribute(f, 57) then
+    if hasAttribute(f, 57) then
         c3_hike_caches_found = c3_hike_caches_found + 1
     end
 end
 
 for _, h in ipairs(hides) do
-    if (f.type == "Traditional Cache" or f.type == "Multi-cache" or f.type == "Unknown Cache"
-        or f.type == "Letterbox Hybrid" or f.type == "Wherigo Cache" or f.type == "Project APE Cache") then
+    if (h.type == "Traditional Cache" or h.type == "Multi-cache" or h.type == "Unknown Cache"
+        or h.type == "Letterbox Hybrid" or h.type == "Wherigo Cache" or h.type == "Project APE Cache") then
         c3_physical_cache_created = c3_physical_cache_created + 1
     end
 end

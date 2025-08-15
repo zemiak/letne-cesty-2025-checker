@@ -62,9 +62,12 @@ printf("Found %d acceptable finds.\n", #finds)
 
 local hides = PGC.GetHides(profileId, {
   fields = {
-    "gccode", "cache_name", "hidden", "last_publish_date", "attributes_set"
+    "gccode", "cache_name", "hidden", "last_publish_date", "attributes_set", "type"
   }
 })
+
+-- PGC.print produces debug log
+--PGC.print('Hides: ', hides, "\n")
 
 -- Manually filter.
 for i = #hides, 1, -1 do
@@ -105,7 +108,7 @@ function q(a, b, c, d)
   )
 end
 
-function testAttribute(find, attribute)
+function hasAttribute(find, attribute)
     if (attribute <= 32) then
         att_set = "attributes_set_1"
     elseif (attribute <= 64) then
@@ -122,7 +125,7 @@ function testAttribute(find, attribute)
     x = tonumber(find[att_set])
     att_num = att_num - 1
     local r = ""
-    for i = 0, atrid do
+    for i = 0, att_num do
         r = (x % 2) .. r
         x = (x - (x % 2)) / 2
     end
@@ -153,29 +156,32 @@ local c1_food_nearby_caches_found = 0
 local c1_events_placed = 0
 
 for _, f in ipairs(finds) do
-    if testAttribute(f, 26) then
+    if hasAttribute(f, 26) then
         c1_public_transit_caches_found = c1_public_transit_caches_found + 1
     end
 
-    if testAttribute(f, 41) then
+    if hasAttribute(f, 41) then
         c1_stroller_accessible_caches_found = c1_stroller_accessible_caches_found + 1
     end
 
-    if testAttribute(f, 32) then
+    if hasAttribute(f, 32) then
         c1_bicycles_caches_found = c1_bicycles_caches_found + 1
     end
 
-    if testAttribute(f, 59) then
+    if hasAttribute(f, 59) then
         c1_food_nearby_caches_found = c1_food_nearby_caches_found + 1
     end
 end
 
 for _, h in ipairs(hides) do
-    if (f.type == "Event Cache" or f.type == "Cache In Trash Out Event" or f.type == "Lost and Found Event Cache"
-        or f.type == "Mega-Event Cache" or f.type == "Giga-Event Cache" or f.type == "Groundspeak Block Party") then
+    if (h.type == "Event Cache" or h.type == "Cache In Trash Out Event" or h.type == "Lost and Found Event Cache"
+        or h.type == "Mega-Event Cache" or h.type == "Giga-Event Cache" or h.type == "Groundspeak Block Party") then
         c1_events_placed = c1_events_placed + 1
     end
 end
+
+-- PGC.print produces debug log
+PGC.print('Event hides: ', c1_events_placed, "\n")
 
 if c1_public_transit_caches_found >= 5 then
     table.insert(html, q(
@@ -266,32 +272,35 @@ local c3_earth_caches_found = 0
 local c3_tourist_caches_found = 0
 local c3_scenic_caches_found = 0
 local c3_hike_caches_found = 0
-local c3_physical_cache_created = false
+local c3_physical_cache_created = 0
 
 for _, f in ipairs(finds) do
-    if f.type = "Earthcache" then
+    if f.type == "Earthcache" then
         c3_earth_caches_found = c3_earth_caches_found + 1
     end
 
-    if testAttribute(f, 63) then
+    if hasAttribute(f, 63) then
         c3_tourist_caches_found = c3_tourist_caches_found + 1
     end
 
-    if testAttribute(f, 8) then
+    if hasAttribute(f, 8) then
         c3_scenic_caches_found = c3_scenic_caches_found + 1
     end
 
-    if testAttribute(f, 57) then
+    if hasAttribute(f, 57) then
         c3_hike_caches_found = c3_hike_caches_found + 1
     end
 end
 
 for _, h in ipairs(hides) do
-    if (f.type == "Traditional Cache" or f.type == "Multi-cache" or f.type == "Unknown Cache"
-        or f.type == "Letterbox Hybrid" or f.type == "Wherigo Cache" or f.type == "Project APE Cache") then
+    if (h.type == "Traditional Cache" or h.type == "Multi-cache" or h.type == "Unknown Cache"
+        or h.type == "Letterbox Hybrid" or h.type == "Wherigo Cache" or h.type == "Project APE Cache") then
         c3_physical_cache_created = c3_physical_cache_created + 1
     end
 end
+
+-- PGC.print produces debug log
+PGC.print('Physical hides: ', c3_physical_cache_created, "\n")
 
 if c3_earth_caches_found >= 5 then
     table.insert(html, q(
@@ -385,11 +394,11 @@ local c2_whereigo_letterbox_caches_found = 0
 local c2_mystery_hides = 0
 
 for _, f in ipairs(finds) do
-    if ((not testAttribute(f, 71)) and f.type == "Unknown Cache") then
+    if ((not hasAttribute(f, 71)) and f.type == "Unknown Cache") then
         c2_mystery_caches_found = c2_mystery_caches_found + 1
     end
 
-    if testAttribute(f, 71) then
+    if hasAttribute(f, 71) then
         c2_challenge_caches_found = c2_challenge_caches_found + 1
     end
 
@@ -403,10 +412,13 @@ for _, f in ipairs(finds) do
 end
 
 for _, h in ipairs(hides) do
-    if (f.type == "Unknown Cache") then
+    if (h.type == "Unknown Cache") then
         c2_mystery_hides = c2_mystery_hides + 1
     end
 end
+
+-- PGC.print produces debug log
+PGC.print('Mystery hides: ', c2_mystery_hides, "\n")
 
 if c2_mystery_caches_found >= 5 then
     table.insert(html, q(

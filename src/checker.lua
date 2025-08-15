@@ -62,7 +62,7 @@ printf("Found %d acceptable finds.\n", #finds)
 
 local hides = PGC.GetHides(profileId, {
   fields = {
-    "gccode", "cache_name", "hidden", "last_publish_date", "attributes_set"
+    "gccode", "cache_name", "hidden", "last_publish_date", "attributes_set", "type"
   }
 })
 
@@ -105,7 +105,7 @@ function q(a, b, c, d)
   )
 end
 
-function testAttribute(find, attribute)
+function hasAttribute(find, attribute)
     if (attribute <= 32) then
         att_set = "attributes_set_1"
     elseif (attribute <= 64) then
@@ -122,7 +122,7 @@ function testAttribute(find, attribute)
     x = tonumber(find[att_set])
     att_num = att_num - 1
     local r = ""
-    for i = 0, atrid do
+    for i = 0, att_num do
         r = (x % 2) .. r
         x = (x - (x % 2)) / 2
     end
