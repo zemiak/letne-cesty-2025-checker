@@ -108,7 +108,7 @@ function q(a, b, c, d)
   )
 end
 
-function hasAttribute(find, attribute)
+function testAttribute(find, attribute)
     if (attribute <= 32) then
         att_set = "attributes_set_1"
     elseif (attribute <= 64) then
@@ -156,19 +156,19 @@ local c1_food_nearby_caches_found = 0
 local c1_events_placed = 0
 
 for _, f in ipairs(finds) do
-    if hasAttribute(f, 26) then
+    if testAttribute(f, 26) then
         c1_public_transit_caches_found = c1_public_transit_caches_found + 1
     end
 
-    if hasAttribute(f, 41) then
+    if testAttribute(f, 41) then
         c1_stroller_accessible_caches_found = c1_stroller_accessible_caches_found + 1
     end
 
-    if hasAttribute(f, 32) then
+    if testAttribute(f, 32) then
         c1_bicycles_caches_found = c1_bicycles_caches_found + 1
     end
 
-    if hasAttribute(f, 59) then
+    if testAttribute(f, 59) then
         c1_food_nearby_caches_found = c1_food_nearby_caches_found + 1
     end
 end
@@ -279,15 +279,15 @@ for _, f in ipairs(finds) do
         c3_earth_caches_found = c3_earth_caches_found + 1
     end
 
-    if hasAttribute(f, 63) then
+    if testAttribute(f, 63) then
         c3_tourist_caches_found = c3_tourist_caches_found + 1
     end
 
-    if hasAttribute(f, 8) then
+    if testAttribute(f, 8) then
         c3_scenic_caches_found = c3_scenic_caches_found + 1
     end
 
-    if hasAttribute(f, 57) then
+    if testAttribute(f, 57) then
         c3_hike_caches_found = c3_hike_caches_found + 1
     end
 end
@@ -394,11 +394,11 @@ local c2_whereigo_letterbox_caches_found = 0
 local c2_mystery_hides = 0
 
 for _, f in ipairs(finds) do
-    if ((not hasAttribute(f, 71)) and f.type == "Unknown Cache") then
+    if ((not testAttribute(f, 71)) and f.type == "Unknown Cache") then
         c2_mystery_caches_found = c2_mystery_caches_found + 1
     end
 
-    if hasAttribute(f, 71) then
+    if testAttribute(f, 71) then
         c2_challenge_caches_found = c2_challenge_caches_found + 1
     end
 
